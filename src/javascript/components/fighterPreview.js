@@ -8,20 +8,10 @@ export function createFighterPreview(fighter, position) {
   });
 
   if (fighter) {
-    const fighterImg = createFighterImage(fighter);
-    const fighterInfo = createElement({
-      tagName: 'div',
-      className: 'fighter-info__card'
-    });
-    const fighterName = createElement({
-      tagName: 'h2',
-      className: 'fighter-info__title'
-    });
-    fighterName.innerText = fighter.name;
-    const fighterData = createFighterData(fighter);
-    fighterInfo.append(fighterName, fighterData);
-    fighterElement.append(fighterImg, fighterInfo);
+    fighterElement.appendChild(createFighterImage(fighter));
+    fighterElement.appendChild(createFighterDescription(fighter));
   }
+
   // todo: show fighter info (image, name, health, etc.)
 
   return fighterElement;
@@ -43,35 +33,19 @@ export function createFighterImage(fighter) {
   return imgElement;
 }
 
-function createFighterData(fighter) {
-  const fighterData = createElement({
+export function createFighterDescription(fighter) {
+  const { name, health, attack, defense } = fighter;
+  const descriptionElement = createElement({
     tagName: 'div',
-    className: 'fighter-data'
+    className: 'fighter-preview___description',
   });
-  const healthIndicator = createFighterDataIndicator('health', fighter.health);
-  const attackIndicator = createFighterDataIndicator('attack', fighter.attack);
-  const defenseIndicator = createFighterDataIndicator('defense', fighter.defense);
-  fighterData.append(healthIndicator, attackIndicator, defenseIndicator);
-  return fighterData;
-}
+  
+  descriptionElement.innerHTML = `
+    <h1>${name}</h1>
+    <span>Health: ${health}HP</span></br>
+    <span>Attack: ${attack}</span></br>
+    <defence>Defence: ${defense}</defence></br>
+  `;
 
-function createFighterDataIndicator(label, value) {
-  const indicator = createElement({
-    tagName: 'div',
-    className: 'fighter-data__indicator'
-  });
-  const icon = createDataIcon(label);
-  const valueElement = createElement({
-    tagName: 'p'
-  });
-  valueElement.innerText = value;
-  indicator.append(icon, valueElement);
-  return indicator;
-}
-
-function createDataIcon(label) {
-  return createElement({
-    tagName: 'img',
-    className: `fighter-data__icon ${label}`
-  });
+  return descriptionElement;
 }
