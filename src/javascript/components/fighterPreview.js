@@ -12,8 +12,6 @@ export function createFighterPreview(fighter, position) {
     fighterElement.appendChild(createFighterDescription(fighter));
   }
 
-  // todo: show fighter info (image, name, health, etc.)
-
   return fighterElement;
 }
 
